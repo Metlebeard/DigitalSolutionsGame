@@ -2,6 +2,7 @@
 let socket = io();
 //declare empty room code variable
 var PIN;
+var yourName = "";
 
 //add options to join or host
 loadStartScreen();
@@ -201,6 +202,7 @@ function enterName()
         name: name,
         code: PIN
     });
+    yourName = name;
 }
 
 socket.on('nameError', function() {
@@ -209,6 +211,17 @@ socket.on('nameError', function() {
 
 socket.on('nameSuccessful', function() {
     clearScreen();
+    //add name to top of the screen
+    var lobbyName = document.createElement('h1');
+    lobbyName.textContent = yourName;
+    lobbyName.classList.add('lobbyName');
+    //add text to the center of the screen
+    var lobbyText = document.createElement('h1');
+    lobbyText.textContent = "Look for your name up on the screen!"
+    lobbyText.classList.add('lobbyText');
+
+    document.body.appendChild(lobbyName);
+    document.body.appendChild(lobbyText);
 });
 
 //clear everything but the scripts
@@ -240,3 +253,11 @@ socket.on('kicked', function() {
 socket.on('playerLeave', function(data) {
     document.getElementById(data.name).remove();
 });
+
+function startGame()
+{
+    socket.emit('beginGame', {
+        //ADD SETTINGS HERE
+    });
+    clearScreen();
+}
