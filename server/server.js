@@ -101,6 +101,7 @@ io.on('connection', (socket) => {
                     }
                 }
                 socket.emit('nameSuccessful');
+                
 
                 rooms[i][2].push(player);
                 console.log('player ' + data.name + ' has joined a room');
