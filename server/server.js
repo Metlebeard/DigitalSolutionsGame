@@ -117,6 +117,25 @@ io.on('connection', (socket) => {
         kickPlayer(player.name, player.code);
     });
 
+    socket.on('beginGame', () => {
+        for (var i = 0; i < rooms.length; i++)
+        {
+            if (rooms[i][0] === socket)
+            {
+                for (var j = 0; j < rooms[i][2].length; j++)
+                {
+                    rooms[i][2][j][3].emit('gameStarted');oo
+                    for (var k = 0; k < rooms[i][2].length; k++)
+                    {
+                        rooms[i][2][j][3].emit('loadPlayerInGame', {
+                            name: rooms[i][2][k][0]
+                        })
+                    }
+                }
+            }
+        }
+    });
+
     //client disconnects
     socket.on('disconnect', () => {
         console.log('User was disconnected');

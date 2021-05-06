@@ -59,7 +59,7 @@ button.join {
 }
 
 body {
-    background-color: antiquewhite;
+    background-color: #674Ea7;
 }
 
 @font-face {
@@ -122,4 +122,12 @@ button.lobbyPlayer {
     background-color: darkgray;
     font-size: 30px;
     border-radius: 50px;
+}
+
+div.playerBoard {
+    background-color: rebeccapurple;
+    width: 38%;
+    height: 650px;
+    margin-left: 30%;
+    margin-top: 2%;
 }

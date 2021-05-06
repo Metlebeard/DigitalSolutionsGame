@@ -261,3 +261,17 @@ function startGame()
     });
     clearScreen();
 }
+
+socket.on('gameStarted', function() {
+    clearScreen();
+    loadGameScreen();
+});
+
+function loadGameScreen(playersArray)
+{
+    var playerBoard = document.createElement('div');
+    playerBoard.classList.add('playerBoard');
+    var yourName = document.createElement('h1');
+
+    document.body.appendChild(playerBoard);
+}
