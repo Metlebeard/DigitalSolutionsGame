@@ -194,3 +194,21 @@ function kickPlayer(name, code)
         }
     }
 }
+
+
+
+
+/*
+Game Idea
+
+Each player gets an option to choose (Search, Gather, Fight etc.)
+After choosing the player must answer a math question
+Getting it right will allow the player to attempt to succeed in the ction (for example getting it
+    right then has a 80% chance of landing a hit etc.)
+Getting it wrong will end with a consequence (Snake jumps out of aa bush and attacks)
+
+The winner is the last person standing
+
+
+
+*/

@@ -267,13 +267,17 @@ socket.on('gameStarted', function() {
     loadGameScreen();
 });
 
-function loadGameScreen(playersArray)
+function loadGameScreen()
 {
     var displayName = document.createElement('h1');
     displayName.textContent = yourName;
+    playerBoard.classList.add('yourNameAboveBoard');
     var playerBoard = document.createElement('div');
     playerBoard.classList.add('playerBoard');
+    var inventory = document.createElement('div');
+    inventory.classList.add('inventory');
 
     document.body.appendChild(displayName);
     document.body.appendChild(playerBoard);
+    playerBoard.appendChild(inventory);
 }

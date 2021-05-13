@@ -53,13 +53,13 @@ button.join {
     height: 200px;
     margin-left: 10px;
     font-size: 80px;
-    background-color: #02A4D3;
+    background-color: #27BA40;
     border: none;
     cursor: pointer;
 }
 
 body {
-    background-color: #674Ea7;
+    background-color: #699FA1;
 }
 
 @font-face {
@@ -125,9 +125,21 @@ button.lobbyPlayer {
 }
 
 div.playerBoard {
-    background-color: rebeccapurple;
+    background-color: #EB7221;
     width: 38%;
     height: 650px;
     margin-left: 30%;
     margin-top: 2%;
+}
+
+h1.yourNameAboveBoard
+{
+    text-align: center;
+}
+
+div.inventory
+{
+    width: 100%;
+    height: 150px;
+    color: grey;
 }
