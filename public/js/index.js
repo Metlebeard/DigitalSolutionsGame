@@ -164,7 +164,7 @@ function loadNameScreen()
     codeInput.setAttribute('placeholder', 'Enter Name');
     codeInput.setAttribute('id', 'nameInput');
     codeInput.classList.add('codeInput');
-    //create new line
+    // create new line
     var newLine = document.createElement('br');
     newLine.setAttribute('id', 'newLine');
     //create join button
@@ -269,9 +269,11 @@ socket.on('gameStarted', function() {
 
 function loadGameScreen(playersArray)
 {
+    var displayName = document.createElement('h1');
+    displayName.textContent = yourName;
     var playerBoard = document.createElement('div');
     playerBoard.classList.add('playerBoard');
-    var yourName = document.createElement('h1');
 
+    document.body.appendChild(displayName);
     document.body.appendChild(playerBoard);
 }

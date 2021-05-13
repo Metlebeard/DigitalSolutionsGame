@@ -26,7 +26,6 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     //log user connections
     console.log('A new user just connected');
-
     //if client selects "Host" add the room to the rooms array and set a keycode
     socket.on('hostRoom', () => {
         var room = [];
@@ -124,7 +123,7 @@ io.on('connection', (socket) => {
             {
                 for (var j = 0; j < rooms[i][2].length; j++)
                 {
-                    rooms[i][2][j][3].emit('gameStarted');oo
+                    rooms[i][2][j][3].emit('gameStarted');
                     for (var k = 0; k < rooms[i][2].length; k++)
                     {
                         rooms[i][2][j][3].emit('loadPlayerInGame', {
