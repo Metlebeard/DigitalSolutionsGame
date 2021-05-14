@@ -139,7 +139,7 @@ h1.yourNameAboveBoard
 
 div.inventory
 {
-    width: 10%;
+    width: 10%; 
     height: 50px;
     color: gray;
 }
