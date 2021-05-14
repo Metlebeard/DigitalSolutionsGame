@@ -271,7 +271,7 @@ function loadGameScreen()
 {
     var displayName = document.createElement('h1');
     displayName.textContent = yourName;
-    playerBoard.classList.add('yourNameAboveBoard');
+    displayName.classList.add('yourNameAboveBoard');
     var playerBoard = document.createElement('div');
     playerBoard.classList.add('playerBoard');
     var inventory = document.createElement('div');
