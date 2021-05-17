@@ -277,7 +277,7 @@ function loadGameScreen()
     var inventory = document.createElement('div');
     inventory.classList.add('inventory');
 
-    document.body.appendChild(displayName);
     document.body.appendChild(playerBoard);
+    playerBoard.appendChild(displayName);
     playerBoard.appendChild(inventory);
 }
