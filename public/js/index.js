@@ -269,11 +269,15 @@ socket.on('gameStarted', function() {
 
 function loadGameScreen()
 {
+    var playerBoard = document.createElement('div');
+    playerBoard.classList.add('playerBoard');
     var displayName = document.createElement('h1');
     displayName.textContent = yourName;
     displayName.classList.add('yourNameAboveBoard');
-    var playerBoard = document.createElement('div');
-    playerBoard.classList.add('playerBoard');
+    var graphicBoard = document.createElement('canvas');
+    graphicBoard.setAttribute('width', '200');
+    graphicBoard.setAttribute('height', '200');
+    graphicBoard.classList.add('graphicBoard');
     var inventory = document.createElement('div');
     inventory.classList.add('inventory');
 
