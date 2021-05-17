@@ -42,7 +42,7 @@ button.host {
     height: 200px;
     margin-left: 27%;
     font-size: 80px;
-    background-color: #B90E0A;
+    background-color: #CC004C;
     border: none;
     cursor: pointer;
 }
@@ -53,13 +53,13 @@ button.join {
     height: 200px;
     margin-left: 10px;
     font-size: 80px;
-    background-color: #27BA40;
+    background-color: #0DB14B;
     border: none;
     cursor: pointer;
 }
 
 body {
-    background-color: #a2a6ab;
+    background-color: #0089D0;
 }
 
 @font-face {
@@ -119,13 +119,13 @@ button.lobbyPlayer {
     margin-bottom: 5x;
     border: none;
     cursor: pointer;
-    background-color: darkgray;
+    background-color: #FCB711;
     font-size: 30px;
     border-radius: 50px;
 }
 
 div.playerBoard {
-    background-color: #EB7221;
+    background-color: #6460AA;
     width: 38%;
     height: 650px;
     margin-left: 30%;
@@ -141,5 +141,5 @@ div.inventory
 {
     width: 10%; 
     height: 50px;
-    color: gray;
+    background-color: #6460FF;
 }
