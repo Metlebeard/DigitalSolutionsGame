@@ -283,5 +283,6 @@ function loadGameScreen()
 
     document.body.appendChild(playerBoard);
     playerBoard.appendChild(displayName);
+    playerBoard.appendChild(graphicBoard);
     playerBoard.appendChild(inventory);
 }
