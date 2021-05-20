@@ -260,6 +260,7 @@ function startGame()
         //ADD SETTINGS HERE
     });
     clearScreen();
+    loadHostGameScreen();
 }
 
 socket.on('gameStarted', function() {
@@ -285,4 +286,13 @@ function loadGameScreen()
     playerBoard.appendChild(displayName);
     playerBoard.appendChild(graphicBoard);
     playerBoard.appendChild(inventory);
+}
+
+function loadHostGameScreen()
+{
+    var map = document.createElement('canvas');
+    map.setAttribute('height', '200');
+    map.setAttribute('width', '200');
+
+    document.body.appendChild(map);
 }
