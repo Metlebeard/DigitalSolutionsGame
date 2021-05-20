@@ -276,15 +276,17 @@ function loadGameScreen()
     displayName.textContent = yourName;
     displayName.classList.add('yourNameAboveBoard');
     var graphicBoard = document.createElement('canvas');
-    graphicBoard.setAttribute('width', '200');
-    graphicBoard.setAttribute('height', '200');
+    graphicBoard.setAttribute('width', '200px');
+    graphicBoard.setAttribute('height', '200px');
     graphicBoard.classList.add('graphicBoard');
+    var searchButton = document.createElement('button');
     var inventory = document.createElement('div');
     inventory.classList.add('inventory');
 
     document.body.appendChild(playerBoard);
     playerBoard.appendChild(displayName);
     playerBoard.appendChild(graphicBoard);
+    playerBoard.appendChild(searchButton);
     playerBoard.appendChild(inventory);
 }
 

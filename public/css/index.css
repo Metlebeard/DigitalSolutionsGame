@@ -146,3 +146,7 @@ div.inventory {
 canvas.hostMap {
     background-color: green;
 }
+
+canvas.graphicBoard {
+    background-color: green;
+}
