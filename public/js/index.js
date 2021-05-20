@@ -291,8 +291,8 @@ function loadGameScreen()
 function loadHostGameScreen()
 {
     var map = document.createElement('canvas');
-    map.setAttribute('height', '80%');
-    map.setAttribute('width', '80%');
+    map.setAttribute('height', '500px');
+    map.setAttribute('width', '500px');
     map.classList.add('hostMap');
 
     document.body.appendChild(map);
