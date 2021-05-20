@@ -132,15 +132,17 @@ div.playerBoard {
     margin-top: 2%;
 }
 
-h1.yourNameAboveBoard
-{
+h1.yourNameAboveBoard {
     text-align: center;
 }
 
-div.inventory
-{
+div.inventory {
     width: 80%; 
     height: 150px;
     margin-left: 10%;
     background-color: #6460FF;
+}
+
+canvas.hostMap {
+    background-color: green;
 }
