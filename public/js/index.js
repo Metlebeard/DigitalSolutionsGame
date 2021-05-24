@@ -284,9 +284,7 @@ function loadGameScreen()
     var inventory = document.createElement('div');
     inventory.classList.add('inventory');
 
-    var ctx = graphicBoard.getContext("2d");
-    var img = "src/PurplePlayer.png";
-    ctx.drawImage(img, 100, 100);
+    draw("src/PurplePlayer.png", graphicBoard, 100, 100);
     //meow
     document.body.appendChild(playerBoard);
     playerBoard.appendChild(displayName);
@@ -303,4 +301,11 @@ function loadHostGameScreen()
     map.classList.add('hostMap');
 
     document.body.appendChild(map);
+}
+
+function draw(path, canvas, x, y){
+    var img = new Image();
+    img.src = path; 
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(img,x,y);            
 }
