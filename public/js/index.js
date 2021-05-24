@@ -284,7 +284,7 @@ function loadGameScreen()
     inventory.classList.add('inventory');
 
     var canvas = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
+    var ctx = canvas.getContext("2d");
     var img = document.getElementById("src/PlayerGreen");
     ctx.drawImage(img, 100, 100);
 
