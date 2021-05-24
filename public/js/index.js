@@ -284,8 +284,7 @@ function loadGameScreen()
     var inventory = document.createElement('div');
     inventory.classList.add('inventory');
 
-    var canvas = document.getElementById("graphicBoard");
-    var ctx = canvas.getContext("2d");
+    var ctx = graphicBoard.getContext("2d");
     var img = document.getElementById("src/PlayerGreen");
     ctx.drawImage(img, 100, 100);
     //meow
