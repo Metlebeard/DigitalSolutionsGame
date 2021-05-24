@@ -279,15 +279,16 @@ function loadGameScreen()
     graphicBoard.setAttribute('width', '200px');
     graphicBoard.setAttribute('height', '200px');
     graphicBoard.classList.add('graphicBoard');
+    graphicBoard.setAttribute("id", "graphicBoard");
     var searchButton = document.createElement('button');
     var inventory = document.createElement('div');
     inventory.classList.add('inventory');
 
-    var canvas = document.getElementById("myCanvas");
+    var canvas = document.getElementById("graphicBoard");
     var ctx = canvas.getContext("2d");
     var img = document.getElementById("src/PlayerGreen");
     ctx.drawImage(img, 100, 100);
-
+    //meow
     document.body.appendChild(playerBoard);
     playerBoard.appendChild(displayName);
     playerBoard.appendChild(graphicBoard);
