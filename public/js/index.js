@@ -307,5 +307,5 @@ function draw(path, canvas, x, y){
     var img = new Image();
     img.src = path; 
     var ctx = canvas.getContext('2d');
-    ctx.drawImage(img,10,10);            
+    ctx.drawImage(img,50,50);            
 }
