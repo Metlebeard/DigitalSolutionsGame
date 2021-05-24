@@ -145,6 +145,7 @@ div.inventory {
 
 canvas.hostMap {
     background-color: green;
+    margin-left: 30%;
 }
 
 canvas.graphicBoard {
