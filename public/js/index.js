@@ -295,6 +295,7 @@ function loadGameScreen()
     playerBoard.appendChild(displayName);
     playerBoard.appendChild(graphicBoard);
     playerBoard.appendChild(questionBox);
+    playerBoard.appendChild(answerBox);
     playerBoard.appendChild(enterButton);
 }
 
