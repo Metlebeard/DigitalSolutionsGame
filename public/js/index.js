@@ -276,14 +276,11 @@ function loadGameScreen()
     displayName.textContent = yourName;
     displayName.classList.add('yourNameAboveBoard');
 
-    //var graphicBoard = document.createElement('canvas');
-    //graphicBoard.setAttribute('width', '200px');
-    //graphicBoard.setAttribute('height', '200px');
-    //graphicBoard.classList.add('graphicBoard');
-    //graphicBoard.setAttribute("id", "graphicBoard");
-    myGameArea.start();
-    myGameArea.classList.add('graphicBoard');
-    myGameArea.setAttribute('graphicBoard');
+    var graphicBoard = document.createElement('canvas');
+    graphicBoard.setAttribute('width', '200px');
+    graphicBoard.setAttribute('height', '200px');
+    graphicBoard.classList.add('graphicBoard');
+    graphicBoard.setAttribute("id", "graphicBoard");
 
     var questionBox = document.createElement('div');
     questionBox.classList.add('questionBox');
@@ -319,15 +316,4 @@ function draw(path, canvas, x, y){
     img.src = path; 
     var ctx = canvas.getContext('2d');
     ctx.drawImage(img,50,50);
-}
-
-  
-var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-    this.canvas.width = 500;
-    this.canvas.height = 500;
-    this.context = this.canvas.getContext("2d");
-    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-    }
 }
