@@ -280,17 +280,19 @@ function loadGameScreen()
     graphicBoard.setAttribute('height', '200px');
     graphicBoard.classList.add('graphicBoard');
     graphicBoard.setAttribute("id", "graphicBoard");
-    var searchButton = document.createElement('button');
-    var inventory = document.createElement('div');
-    inventory.classList.add('inventory');
+    var questionBox = document.createElement('div');
+    questionBox.classList.add('questionBox');
+    var enterButton = document.createElement('button');
+    enterButton.textContent = "Answer";
+    enterButton.classList.add('enterButton');
 
     draw("../src/PurplePlayer.png", graphicBoard, 100, 100);
     //meow
     document.body.appendChild(playerBoard);
     playerBoard.appendChild(displayName);
     playerBoard.appendChild(graphicBoard);
-    playerBoard.appendChild(searchButton);
-    playerBoard.appendChild(inventory);
+    playerBoard.appendChild(questionBox);
+    playerBoard.appendChild(enterButton);
 }
 
 function loadHostGameScreen()
@@ -307,5 +309,5 @@ function draw(path, canvas, x, y){
     var img = new Image();
     img.src = path; 
     var ctx = canvas.getContext('2d');
-    ctx.drawImage(img,50,50);            
+    ctx.drawImage(img,50,50);
 }

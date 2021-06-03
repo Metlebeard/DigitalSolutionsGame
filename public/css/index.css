@@ -136,7 +136,7 @@ h1.yourNameAboveBoard {
     text-align: center;
 }
 
-div.inventory {
+div.questionBox {
     width: 80%; 
     height: 150px;
     margin-left: 10%;
@@ -151,4 +151,10 @@ canvas.hostMap {
 canvas.graphicBoard {
     background-color: green;
     margin-left: 30%;
+}
+
+button.enterButton {
+    width: 80%; 
+    height: 150px;
+    margin-left: 10%;
 }
