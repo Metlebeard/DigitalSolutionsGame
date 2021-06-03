@@ -155,6 +155,12 @@ canvas.graphicBoard {
 
 button.enterButton {
     width: 80%; 
-    height: 150px;
+    height: 75px;
+    margin-left: 10%;
+}
+
+input.answerBox {
+    width: 80%; 
+    height: 75px;
     margin-left: 10%;
 }

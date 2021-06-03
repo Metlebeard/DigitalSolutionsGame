@@ -282,6 +282,9 @@ function loadGameScreen()
     graphicBoard.setAttribute("id", "graphicBoard");
     var questionBox = document.createElement('div');
     questionBox.classList.add('questionBox');
+    var answerBox = document.createElement('input');
+    answerBox.setAttribute('placeholder', 'Put your answer here!');
+    answerBox.classList.add('answerBox');
     var enterButton = document.createElement('button');
     enterButton.textContent = "Answer";
     enterButton.classList.add('enterButton');
