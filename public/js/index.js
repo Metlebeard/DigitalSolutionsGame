@@ -1,7 +1,5 @@
 //join server
 let socket = io();
-//include file reader library
-const fs = require('fs')
 //declare empty room code variable
 var PIN;
 var yourName = "";
@@ -322,9 +320,5 @@ function draw(path, canvas, x, y){
 
 function loadQuestions()
 {
-    fs.readFile('src/questions.txt', (err, data) => {
-        if (err) throw err;
-    
-        console.log(data.toString());
-    })
+    socket.emit('loadQuestions');
 }

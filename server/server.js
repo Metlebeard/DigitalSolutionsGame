@@ -1,6 +1,7 @@
 //include external libraries
 const path = require('path');
 const http = require('http');
+const fs = require('fs'); //file reader library
 const express = require('express');
 const socketIO = require('socket.io');
 
@@ -133,6 +134,14 @@ io.on('connection', (socket) => {
                 }
             }
         }
+    });
+
+    socket.on('loadQuestions', () => {
+        fs.readFile('src/questions.txt', (err, data) => {
+            if (err) throw err;
+        
+            console.log(data.toString());
+        })
     });
 
     //client disconnects
