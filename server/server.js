@@ -137,7 +137,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('loadQuestions', () => {
-        fs.readFile('/../public/src/questions.txt', (err, data) => {
+        fs.readFile('public/src/questions.txt', (err, data) => {
             if (err) throw err;
         
             console.log(data.toString());
