@@ -136,12 +136,39 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on('loadQuestions', () => {
+    socket.on('requestQuestion', () => {
+        var questions = [];
         fs.readFile('public/src/questions.txt', (err, data) => {
             if (err) throw err;
         
             console.log(data.toString());
-        })
+            questions.push(data.toString());
+        });
+
+        var chosenQuestion = randInt(0, questions.length);
+        var question = "";
+        var answer = "";
+        var questionToAnswer = false;
+        for (var i = 0; i < questions[chosenQuestion].length; i++)
+        {
+            if (questions[chosenQuestion][i] == "=")
+            {
+                questionToAnswer = true;
+            }
+            if (!questionToAnswer)
+            {
+                question += questions[chosenQuestion][i];
+            }
+            else
+            {
+                answer += questions[chosenQuestion][i];
+            }
+        }
+
+        socket.emit('questionSent', {
+            question: question,
+            answer: answer
+        });
     });
 
     //client disconnects

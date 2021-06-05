@@ -4,6 +4,9 @@ let socket = io();
 var PIN;
 var yourName = "";
 
+var question = "";
+var answer = "";
+
 //add options to join or host
 loadStartScreen();
 
@@ -284,6 +287,9 @@ function loadGameScreen()
 
     var questionBox = document.createElement('div');
     questionBox.classList.add('questionBox');
+    var questionText = document.createElement('h1');
+    questionText.classList.ass('questionText');
+    questionText.setAttribute('id', 'questionText');
     var answerBox = document.createElement('input');
     answerBox.setAttribute('placeholder', 'Put your answer here!');
     answerBox.classList.add('answerBox');
@@ -297,8 +303,13 @@ function loadGameScreen()
     playerBoard.appendChild(displayName);
     playerBoard.appendChild(graphicBoard);
     playerBoard.appendChild(questionBox);
+    questionBox.appendChild(questionText);
     playerBoard.appendChild(answerBox);
     playerBoard.appendChild(enterButton);
+
+    requestQuestion();
+    while (question == "") {};
+    loadQuestion();
 }
 
 function loadHostGameScreen()
@@ -318,7 +329,18 @@ function draw(path, canvas, x, y){
     ctx.drawImage(img,50,50);
 }
 
-function loadQuestions()
+function requestQuestion()
 {
-    socket.emit('loadQuestions');
+    socket.emit('requestQuestion');
+}
+
+socket.on('questionSent', function(data) {
+    question = data.question;
+    answer = data.answer;
+});
+
+function loadQuestion()
+{
+    var questionText = document.getElementById('questionText');
+    questionText.textContent = question;
 }
