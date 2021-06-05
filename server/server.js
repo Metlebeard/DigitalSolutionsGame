@@ -145,7 +145,7 @@ io.on('connection', (socket) => {
             questions.push(data.toString());
         });
 
-        var chosenQuestion = randInt(0, questions.length);
+        var chosenQuestion = randInt(0, questions.length-1);
         var question = "";
         var answer = "";
         var questionToAnswer = false;
