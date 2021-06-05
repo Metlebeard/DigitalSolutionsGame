@@ -288,7 +288,7 @@ function loadGameScreen()
     var questionBox = document.createElement('div');
     questionBox.classList.add('questionBox');
     var questionText = document.createElement('h1');
-    questionText.classList.ass('questionText');
+    questionText.classList.add('questionText');
     questionText.setAttribute('id', 'questionText');
     var answerBox = document.createElement('input');
     answerBox.setAttribute('placeholder', 'Put your answer here!');
