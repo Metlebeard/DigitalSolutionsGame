@@ -308,7 +308,7 @@ function loadGameScreen()
     playerBoard.appendChild(enterButton);
 
     requestQuestion();
-    while (question == "") {};
+    //while (question == "") {};
     loadQuestion();
 }
 
