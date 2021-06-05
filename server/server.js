@@ -149,6 +149,7 @@ io.on('connection', (socket) => {
         var question = "";
         var answer = "";
         var questionToAnswer = false;
+        console.log(questions[chosenQuestion]);
         for (var i = 0; i < questions[chosenQuestion].length; i++)
         {
             if (questions[chosenQuestion][i] == "=")
