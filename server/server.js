@@ -145,10 +145,13 @@ io.on('connection', (socket) => {
             questions.push(data.toString());
         });
 
+        return;
+
         var chosenQuestion = randInt(0, questions.length-1);
         var question = "";
         var answer = "";
         var questionToAnswer = false;
+        console.log(chosenQuestion);
         console.log(questions[chosenQuestion]);
         for (var i = 0; i < questions[chosenQuestion].length; i++)
         {
