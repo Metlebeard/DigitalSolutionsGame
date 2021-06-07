@@ -97,6 +97,9 @@ function loadHostScreen()
     document.body.appendChild(playerArea);
 }
 
+//prevent form from reloading on submission
+//function handleForm(event) { event.preventDefault(); } 
+
 //load client's screen state
 function loadJoinScreen()
 {
@@ -105,6 +108,10 @@ function loadJoinScreen()
     title.textContent = "Seff's Math Game";
     title.setAttribute('id', 'title');
     title.classList.add('joinTitle');
+
+    //create form to allow enter key
+    var joinForm = document.createElement('form');
+    joinForm.setAttribute('onsubmit', 'checkCode(); return false');
     //create code input
     var codeInput = document.createElement('input');
     codeInput.setAttribute('placeholder', 'Enter Game PIN');
@@ -117,13 +124,15 @@ function loadJoinScreen()
     var joinButton = document.createElement('button');
     joinButton.textContent = "ENTER PIN"
     joinButton.setAttribute('id', 'joinButton');
-    joinButton.setAttribute('onclick', 'checkCode()');
+    joinButton.setAttribute('type', 'submit');
     joinButton.classList.add('joinButton');
+
     //add to body
     document.body.appendChild(title);
-    document.body.appendChild(codeInput);
-    document.body.appendChild(newLine);
-    document.body.appendChild(joinButton);
+    document.body.appendChild(joinForm);
+    joinForm.appendChild(codeInput);
+    joinForm.appendChild(newLine);
+    joinForm.appendChild(joinButton);
 }
 
 //add code to host's screen
@@ -162,6 +171,9 @@ function loadNameScreen()
     title.textContent = "Seff's Math Game";
     title.setAttribute('id', 'title');
     title.classList.add('joinTitle');
+    //create form to allow enter key
+    var joinForm = document.createElement('form');
+    joinForm.setAttribute('onsubmit', 'enterName(); return false');
     //create name input
     var codeInput = document.createElement('input');
     codeInput.setAttribute('placeholder', 'Enter Name');
@@ -174,13 +186,14 @@ function loadNameScreen()
     var joinButton = document.createElement('button');
     joinButton.textContent = "JOIN"
     joinButton.setAttribute('id', 'joinButton');
-    joinButton.setAttribute('onclick', 'enterName()');
+    joinButton.setAttribute('type', 'submit');
     joinButton.classList.add('joinButton');
     //add to body
     document.body.appendChild(title);
-    document.body.appendChild(codeInput);
-    document.body.appendChild(newLine);
-    document.body.appendChild(joinButton);
+    document.body.appendChild(joinForm);
+    joinForm.appendChild(codeInput);
+    joinForm.appendChild(newLine);
+    joinForm.appendChild(joinButton);
 }
 
 //add player to host's screen when connected
@@ -293,9 +306,11 @@ function loadGameScreen()
     var answerBox = document.createElement('input');
     answerBox.setAttribute('placeholder', 'Put your answer here!');
     answerBox.classList.add('answerBox');
+    answerBox.setAttribute('id', 'answerBox');
     var enterButton = document.createElement('button');
     enterButton.textContent = "Answer";
     enterButton.classList.add('enterButton');
+    enterButton.setAttribute('onclick', 'answerQuestion()');
 
     draw("../src/PurplePlayer.png", graphicBoard, 100, 100);
     //meow
@@ -308,8 +323,6 @@ function loadGameScreen()
     playerBoard.appendChild(enterButton);
 
     requestQuestion();
-    //while (question == "") {};
-    loadQuestion();
 }
 
 function loadHostGameScreen()
@@ -337,10 +350,39 @@ function requestQuestion()
 socket.on('questionSent', function(data) {
     question = data.question;
     answer = data.answer;
+
+    console.log('Question: ' + question);
+    loadQuestion();
 });
 
 function loadQuestion()
 {
     var questionText = document.getElementById('questionText');
     questionText.textContent = question;
+    console.log('loaded');
+}
+
+function answerQuestion()
+{
+    var enteredAnswer = document.getElementById('answerBox').value;
+    var questionText = document.getElementById('questionText');
+
+    if (enteredAnswer == answer)
+    {
+        questionText.textContent = 'CORRECT';
+        questionText.style.color = "#3CAEA3";
+        questionCorrect();
+    }
+    else
+    {
+        questionText.textContent = 'INCORRECT';
+        questionText.style.color = "#ED553B";
+        questionIncorrect();
+    }
+    enteredAnswer = "";
+}
+
+function questionIncorrect()
+{
+    
 }

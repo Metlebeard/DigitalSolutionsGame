@@ -140,7 +140,7 @@ div.questionBox {
     width: 80%; 
     height: 150px;
     margin-left: 10%;
-    background-color: #6460FF;
+    background-color: #0089D0;
 }
 
 canvas.hostMap {
@@ -157,10 +157,21 @@ button.enterButton {
     width: 80%; 
     height: 75px;
     margin-left: 10%;
+    border: none;
+    cursor: pointer;
 }
 
 input.answerBox {
-    width: 78%; 
+    width: 79%; 
     height: 75px;
     margin-left: 10%;
+    border: none;
+    text-align: center;
+    font-size: 35px;
+}
+
+h1.questionText {
+    text-align: center;
+    font-size: 50px;
+    color: white;
 }

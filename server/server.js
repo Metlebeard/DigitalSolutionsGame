@@ -137,15 +137,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on('requestQuestion', () => {
-        var questions = [];
-        fs.readFile('public/src/questions.txt', (err, data) => {
-            if (err) throw err;
-        
-            console.log(data.toString());
-            questions.push(data.toString());
-        });
-
-        return;
+        var text = fs.readFileSync('public/src/questions.txt', 'utf-8');
+        var questions = text.split('\n');
 
         var chosenQuestion = randInt(0, questions.length-1);
         var question = "";
@@ -155,13 +148,16 @@ io.on('connection', (socket) => {
         console.log(questions[chosenQuestion]);
         for (var i = 0; i < questions[chosenQuestion].length; i++)
         {
-            if (questions[chosenQuestion][i] == "=")
-            {
-                questionToAnswer = true;
-            }
             if (!questionToAnswer)
             {
-                question += questions[chosenQuestion][i];
+                if (questions[chosenQuestion][i] === "=")
+                {
+                    questionToAnswer = true;
+                }
+                else
+                {
+                    question += questions[chosenQuestion][i];
+                }
             }
             else
             {
