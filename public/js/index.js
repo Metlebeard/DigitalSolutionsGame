@@ -456,7 +456,7 @@ function drawGrid()
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 5;
 
-    for (var i = 1; i >= 7; i++)
+    for (var i = 1; i < 8; i++)
     {
         var pos = (600/7)
         ctx.beginPath();
