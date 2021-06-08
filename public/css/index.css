@@ -177,11 +177,12 @@ h1.questionText {
 }
 
 button.actionButton {
-    width: 80%;
+    width: 100%;
+    margin-top: 5px;
     text-align: center;
     border: none;
     height: 20px;
     font-size: 15px;
     cursor: pointer;
-    background-color: #0089D0;
+    background-color: transparent;
 }
