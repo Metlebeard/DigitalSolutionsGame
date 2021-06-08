@@ -288,6 +288,7 @@ function loadGameScreen()
 {
     var playerBoard = document.createElement('div');
     playerBoard.classList.add('playerBoard');
+    playerBoard.setAttribute('id', 'playerBoard');
     var displayName = document.createElement('h1');
     displayName.textContent = yourName;
     displayName.classList.add('yourNameAboveBoard');
@@ -406,6 +407,8 @@ function questionCorrect()
     var answerBox = document.getElementById('answerBox');
     var enterButton = document.getElementById('enterButton');
 
+    var playerBoard = document.getElementById('playerBoard');
+
     questionBox.remove();
     questionText.remove();
     answerBox.remove();
@@ -426,4 +429,10 @@ function questionCorrect()
     var battleButton = document.createElement('button');
     battleButton.setAttribute('onclick', 'battle()');
     moveUpButton.textContent = "Battle";
+
+    playerBoard.appendChild(moveUpButton);
+    playerBoard.appendChild(moveDownButton);
+    playerBoard.appendChild(moveRightButton);
+    playerBoard.appendChild(moveLeftButton);
+    playerBoard.appendChild(battleButton);
 }
