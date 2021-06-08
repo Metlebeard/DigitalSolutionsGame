@@ -337,11 +337,10 @@ function loadGameScreen()
 function loadHostGameScreen()
 {
     var map = document.createElement('canvas');
-    map.setAttribute('height', '500px');
-    map.setAttribute('width', '500px');
+    map.setAttribute('height', '700px');
+    map.setAttribute('width', '700px');
     map.classList.add('hostMap');
-
-
+    map.setAttribute('id', 'hostMap');
 
     document.body.appendChild(map);
 }
@@ -441,4 +440,33 @@ function questionCorrect()
     playerBoard.appendChild(moveRightButton);
     playerBoard.appendChild(moveLeftButton);
     playerBoard.appendChild(battleButton);
+}
+
+function drawGrid()
+{
+    const canvas = document.getElementById('hostMap');
+
+    if (!canvas.getContext) {
+        return;
+    }
+    const ctx = canvas.getContext('2d');
+
+    // set line stroke and line width
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5;
+
+    for (var i = 0; i < 7; i++)
+    {
+        ctx.beginPath();
+        ctx.moveTo((10*i)+10, 0);
+        ctx.lineTo((10*i)+10, 700);
+        ctx.stroke();
+    }
+
+    /* draw a red line
+    ctx.beginPath();
+    ctx.moveTo(100, 100);
+    ctx.lineTo(300, 100);
+    ctx.stroke();
+    */
 }

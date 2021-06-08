@@ -1,59 +1,69 @@
-//include external libraries
-const path = require('path');
-const http = require('http');
+//INCLUDE EXTERNAL LIBRARIES - - -
+const path = require('path'); //re-routing library
+const http = require('http'); //server creating library
 const fs = require('fs'); //file reader library
-const express = require('express');
-const socketIO = require('socket.io');
+const express = require('express'); //server running library
+const socketIO = require('socket.io'); //client input/output library
 
-//link public folder
-const publicPath = path.join(__dirname, '/../public');
-//set port to 2244
-const port = process.env.PORT || 2244;
-//create server functionality
-let app = express();
-//create server
-let server = http.createServer(app);
-//allow client connections
-let io = socketIO(server);
+//SERVER SET UP - - -
+const publicPath = path.join(__dirname, '/../public'); //link public folder
+const port = process.env.PORT || 2244; //set port to 2244
+let app = express(); //create server functionality
+let server = http.createServer(app); //create server
+let io = socketIO(server); //allow client connections
+app.use(express.static(publicPath)); //redirect clients to index.html in public
 
-//rooms
-//[0]Host Socket, [1]Room Code, [2]Player Arrays
-let rooms = [];
+//ROOMS - - -
+//room reference: [0]Host Socket, [1]Room Code, [2]Player Arrays, [3]Map Array
+let rooms = []; //create 
 
-//redirect clients to index.html in public/
-app.use(express.static(publicPath));
-
-//client connects
+//CLIENT CONNECTION - - -
 io.on('connection', (socket) => {
-    //log user connections
-    console.log('A new user just connected');
-    //if client selects "Host" add the room to the rooms array and set a keycode
-    socket.on('hostRoom', () => {
-        var room = [];
-        room.push(socket);
+    console.log('A new user just connected'); //log user connections
 
-        var roomCode = '';
+    //runs if client selects "Host" option
+    socket.on('hostRoom', () => {
+        var room = []; //create room variable
+        room.push(socket); //attach host's connection to room
+
+        var roomCode = ''; //create room's code variable
+        //create a random 6 digit code
         for (var i = 0; i < 6; i++)
         {
             roomCode += randInt(0, 9);
         }
-        room.push(roomCode);
+        room.push(roomCode); //attach room code to room
 
-        var players = [];
-        room.push(players);
+        var players = []; //create playerList variable
+        room.push(players); //attach playerlist to room
 
-        rooms.push(room);
+        var mapData = []; //create map variable
+        //create a 7x7 vector map (mapData[x][y])
+        for (var x = 0; x < 7; x++)
+        {
+            var xRow = [];
+            for (var y = 0; y < 7; y++)
+            {
+                var tile = [];
+                xRow.push(tile);
+            }
+            mapData.push(xRow);
+        }
+        room.push(mapData); //attach map to room
+        rooms.push(room); //attach the room to the room list
+        console.log('room created'); //log that room has been created
 
-        console.log('room created');
+        //send the code to the host
         socket.emit('hostCode', {
             code: roomCode
         });
-        console.log('code sent')
+        console.log('code sent') //log that code has been sent
     });    
 
     //when client tries to join room see if room exists
     socket.on('checkCode', (code) => {
-        var roomFound = false;
+        var roomFound = false; //set roomFound to false
+        //check all rooms and see if the code matches
         for (var i = 0; i < rooms.length; i++)
         {
             if (!roomFound)
@@ -78,14 +88,16 @@ io.on('connection', (socket) => {
         }
     });
 
-    //add players name and socket to the room with code they've used
+    //runs if client selects "Join" option and submits valid code and name
     socket.on('joinRoom', (data) => {
-        //player[name, points, lives, socket]
-        var player = [];
-        player.push(data.name);
-        player.push(0);
-        player.push(3);
-        player.push(socket);
+        //player reference :\\: [0]name [1]KOs [2]lives [3]socket
+        var player = []; //create player variable
+        player.push(data.name); //attach submitted name to player
+        player.push(0); //set KOs to 0
+        player.push(3); //set lives to 3
+        player.push(socket); //attach client's connection
+
+        //check for room and see if name is available
         for (var i = 0; i < rooms.length; i++)
         {
             if (data.code === rooms[i][1])
@@ -95,15 +107,17 @@ io.on('connection', (socket) => {
                 {
                     if (data.name === rooms[i][2][j][0])
                     {
-                        console.log('player tried to join with the same name')
+                        console.log('player tried to join with the same name');
                         socket.emit('nameError');
                         return;
                     }
                 }
                 socket.emit('nameSuccessful');
                 
-
                 rooms[i][2].push(player);
+                var xPos = randInt(0, 7);
+                var yPos = randInt(0, 7);
+                rooms[i][3][xPos][yPos].push(socket);
                 console.log('player ' + data.name + ' has joined a room');
 
                 rooms[i][0].emit('playerJoined', {
