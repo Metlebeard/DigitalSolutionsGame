@@ -298,8 +298,14 @@ function loadGameScreen()
     graphicBoard.classList.add('graphicBoard');
     graphicBoard.setAttribute("id", "graphicBoard");
 
+
+    //create form to allow enter key
+    var joinForm = document.createElement('form');
+    joinForm.setAttribute('onsubmit', 'answerQuestion; return false');
+
     var questionBox = document.createElement('div');
     questionBox.classList.add('questionBox');
+    questionBox.setAttribute('id', 'questionBox');
     var questionText = document.createElement('h1');
     questionText.classList.add('questionText');
     questionText.setAttribute('id', 'questionText');
@@ -308,9 +314,10 @@ function loadGameScreen()
     answerBox.classList.add('answerBox');
     answerBox.setAttribute('id', 'answerBox');
     var enterButton = document.createElement('button');
+    enterButton.setAttribute('id', 'enterButton');
     enterButton.textContent = "Answer";
     enterButton.classList.add('enterButton');
-    enterButton.setAttribute('onclick', 'answerQuestion()');
+    enterButton.setAttribute('type', 'submit');
 
     draw("../src/PurplePlayer.png", graphicBoard, 100, 100);
     //meow
@@ -319,8 +326,9 @@ function loadGameScreen()
     playerBoard.appendChild(graphicBoard);
     playerBoard.appendChild(questionBox);
     questionBox.appendChild(questionText);
-    playerBoard.appendChild(answerBox);
-    playerBoard.appendChild(enterButton);
+    playerBoard.appendChild(joinForm);
+    joinForm.appendChild(answerBox);
+    joinForm.appendChild(enterButton);
 
     requestQuestion();
 }
@@ -331,6 +339,8 @@ function loadHostGameScreen()
     map.setAttribute('height', '500px');
     map.setAttribute('width', '500px');
     map.classList.add('hostMap');
+
+
 
     document.body.appendChild(map);
 }
@@ -371,18 +381,33 @@ function answerQuestion()
     {
         questionText.textContent = 'CORRECT';
         questionText.style.color = "#3CAEA3";
+        enteredAnswer = "";
         questionCorrect();
     }
     else
     {
         questionText.textContent = 'INCORRECT';
         questionText.style.color = "#ED553B";
+        enteredAnswer = "";
         questionIncorrect();
     }
-    enteredAnswer = "";
 }
 
 function questionIncorrect()
 {
-    
+    setTimeout('', 5000);
+    requestQuestion();
+}
+
+function questionCorrect()
+{
+    var questionBox = document.getElementById('questionBox');
+    var questionText = document.getElementById('questionText');
+    var answerBox = document.getElementById('answerBox');
+    var enterButton = document.getElementById('enterButton');
+
+    questionBox.remove();
+    questionText.remove();
+    answerBox.remove();
+    enterButton.remove();
 }
