@@ -430,6 +430,7 @@ function questionCorrect()
     battleButton.setAttribute('onclick', 'battle()');
     moveUpButton.textContent = "Battle";
 
+    //append children
     playerBoard.appendChild(moveUpButton);
     playerBoard.appendChild(moveDownButton);
     playerBoard.appendChild(moveRightButton);
