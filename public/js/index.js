@@ -337,8 +337,8 @@ function loadGameScreen()
 function loadHostGameScreen()
 {
     var map = document.createElement('canvas');
-    map.setAttribute('height', '700px');
-    map.setAttribute('width', '700px');
+    map.setAttribute('height', '600px');
+    map.setAttribute('width', '600px');
     map.classList.add('hostMap');
     map.setAttribute('id', 'hostMap');
 
@@ -456,11 +456,12 @@ function drawGrid()
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 5;
 
-    for (var i = 0; i < 7; i++)
+    for (var i = 1; i >= 7; i++)
     {
+        var pos = (600/7)
         ctx.beginPath();
-        ctx.moveTo((10*i)+10, 0);
-        ctx.lineTo((10*i)+10, 700);
+        ctx.moveTo((pos*i), 0);
+        ctx.lineTo((pos*i), 700);
         ctx.stroke();
     }
 
