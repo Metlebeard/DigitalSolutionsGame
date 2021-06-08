@@ -182,7 +182,9 @@ button.actionButton {
     text-align: center;
     border: none;
     height: 20px;
-    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
     cursor: pointer;
     background-color: transparent;
 }
