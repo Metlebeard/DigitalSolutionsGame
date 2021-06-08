@@ -417,18 +417,23 @@ function questionCorrect()
     var moveUpButton = document.createElement('button');
     moveUpButton.setAttribute('onclick', 'moveUp()');
     moveUpButton.textContent = "Move Up";
+    moveUpButton.classList.add('actionButton');
     var moveDownButton = document.createElement('button');
     moveDownButton.setAttribute('onclick', 'moveDown()');
     moveDownButton.textContent = "Move Down";
+    moveDownButton.classList.add('actionButton');
     var moveLeftButton = document.createElement('button');
     moveLeftButton.setAttribute('onclick', 'moveLeft()');
     moveLeftButton.textContent = "Move Left";
+    moveLeftButton.classList.add('actionButton');
     var moveRightButton = document.createElement('button');
     moveRightButton.setAttribute('onclick', 'moveUp()');
     moveRightButton.textContent = "Move Right";
+    moveRightButton.classList.add('actionButton');
     var battleButton = document.createElement('button');
     battleButton.setAttribute('onclick', 'battle()');
     battleButton.textContent = "Battle";
+    battleButton.classList.add('actionButton');
 
     //append children
     playerBoard.appendChild(moveUpButton);
