@@ -301,7 +301,7 @@ function loadGameScreen()
 
     //create form to allow enter key
     var joinForm = document.createElement('form');
-    joinForm.setAttribute('onsubmit', 'answerQuestion; return false');
+    joinForm.setAttribute('onsubmit', 'answerQuestion(); return false');
 
     var questionBox = document.createElement('div');
     questionBox.classList.add('questionBox');
