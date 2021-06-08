@@ -343,6 +343,7 @@ function loadHostGameScreen()
     map.setAttribute('id', 'hostMap');
 
     document.body.appendChild(map);
+    drawGrid();
 }
 
 function draw(path, canvas, x, y){
