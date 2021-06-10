@@ -502,7 +502,7 @@ socket.on('setPlayerPos', function (data) {
     {
         for (var j = 0; j < hostMapData[i].length; j++)
         {
-            if (hostMapData[i][j].contains(data.name))
+            if (hostMapData[i][j].includes(data.name))
             {
                 for (var k = 0; k < hostMapData[i][j].length; k++)
                 {
