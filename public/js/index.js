@@ -355,7 +355,7 @@ function loadHostGameScreen()
     hostMap.classList.add('hostMap');
     hostMap.setAttribute('id', 'hostMap');
 
-    document.body.appendChild(hostMapData);
+    document.body.appendChild(hostMap);
     clearMap();
     drawGrid();
     drawPlayers();
