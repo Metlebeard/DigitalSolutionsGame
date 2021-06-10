@@ -349,11 +349,11 @@ function loadGameScreen()
 
 function loadHostGameScreen()
 {
-    var hostMapData = document.createElement('canvas');
-    hostMapData.setAttribute('height', '600px');
-    hostMapData.setAttribute('width', '600px');
-    hostMapData.classList.add('hostMap');
-    hostMapData.setAttribute('id', 'hostMap');
+    var hostMap = document.createElement('canvas');
+    hostMap.setAttribute('height', '600px');
+    hostMap.setAttribute('width', '600px');
+    hostMap.classList.add('hostMap');
+    hostMap.setAttribute('id', 'hostMap');
 
     document.body.appendChild(hostMapData);
     clearMap();
