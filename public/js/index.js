@@ -456,12 +456,20 @@ function drawGrid()
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 5;
 
-    for (var i = 1; i < 8; i++)
+    for (var i = 1; i < 7; i++)
     {
         var pos = (600/7)
         ctx.beginPath();
         ctx.moveTo((pos*i), 0);
-        ctx.lineTo((pos*i), 700);
+        ctx.lineTo((pos*i), 600);
+        ctx.stroke();
+    }
+    for (var i = 1; i < 7; i++)
+    {
+        var pos = (600/7)
+        ctx.beginPath();
+        ctx.moveTo(0, (pos*i));
+        ctx.lineTo(600, (pos*i));
         ctx.stroke();
     }
 
