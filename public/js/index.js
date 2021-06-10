@@ -7,7 +7,7 @@ var yourName = "";
 var question = "";
 var answer = "";
 
-var map = [];
+var hostMapData = [];
 
 //add options to join or host
 loadStartScreen();
@@ -106,7 +106,7 @@ function loadHostScreen()
             var tile = [];
             xRow.push(tile);
         }
-        map.push(xRow);
+        hostMapData.push(xRow);
     }
 }
 
@@ -349,13 +349,13 @@ function loadGameScreen()
 
 function loadHostGameScreen()
 {
-    var map = document.createElement('canvas');
-    map.setAttribute('height', '600px');
-    map.setAttribute('width', '600px');
-    map.classList.add('hostMap');
-    map.setAttribute('id', 'hostMap');
+    var hostMapData = document.createElement('canvas');
+    hostMapData.setAttribute('height', '600px');
+    hostMapData.setAttribute('width', '600px');
+    hostMapData.classList.add('hostMap');
+    hostMapData.setAttribute('id', 'hostMap');
 
-    document.body.appendChild(map);
+    document.body.appendChild(hostMapData);
     clearMap();
     drawGrid();
     drawPlayers();
@@ -498,24 +498,24 @@ function drawGrid()
 
 socket.on('setPlayerPos', function (data) {
     var playerFound = false;
-    for (var i = 0; i < map.length; i++)
+    for (var i = 0; i < hostMapData.length; i++)
     {
-        for (var j = 0; j < map[i].length; j++)
+        for (var j = 0; j < hostMapData[i].length; j++)
         {
-            if (map[i][j].contains(data.name))
+            if (hostMapData[i][j].contains(data.name))
             {
-                for (var k = 0; k < map[i][j].length; k++)
+                for (var k = 0; k < hostMapData[i][j].length; k++)
                 {
-                    if (map[i][j][k] === data.name)
+                    if (hostMapData[i][j][k] === data.name)
                     {
-                        map[i][j].splice(k, 1);
+                        hostMapData[i][j].splice(k, 1);
                     }
                 }
             }
         }
     }
 
-    map[data.x][data.y].push(data.name);
+    hostMapData[data.x][data.y].push(data.name);
     clearMap();
     drawGrid();
     drawPlayers();
@@ -538,11 +538,11 @@ function drawPlayers()
     {
         for (var y = 0; y < 7; y++)
         {
-            if (map[x][y].length > 0)
+            if (hostMapData[x][y].length > 0)
             {
-                for (var i = 0; i < map[x][y].length; i++)
+                for (var i = 0; i < hostMapData[x][y].length; i++)
                 {
-                    ctx.fillText(map[x][y][i], x*(600/7), y*(600/7)+(i*5));
+                    ctx.fillText(hostMapData[x][y][i], x*(600/7), y*(600/7)+(i*5));
                 }
             }
         }
