@@ -7,6 +7,8 @@ var yourName = "";
 var question = "";
 var answer = "";
 
+var map = [];
+
 //add options to join or host
 loadStartScreen();
 
@@ -95,6 +97,17 @@ function loadHostScreen()
     document.body.appendChild(startButton);
     document.body.appendChild(title);
     document.body.appendChild(playerArea);
+
+    for (var x = 0; x < 7; x++)
+    {
+        var xRow = [];
+        for (var y = 0; y < 7; y++)
+        {
+            var tile = [];
+            xRow.push(tile);
+        }
+        map.push(xRow);
+    }
 }
 
 //prevent form from reloading on submission
@@ -343,7 +356,9 @@ function loadHostGameScreen()
     map.setAttribute('id', 'hostMap');
 
     document.body.appendChild(map);
+    clearMap();
     drawGrid();
+    drawPlayers();
 }
 
 function draw(path, canvas, x, y){
@@ -479,4 +494,69 @@ function drawGrid()
     ctx.lineTo(300, 100);
     ctx.stroke();
     */
+}
+
+socket.on('setPlayerPos', function (data) {
+    var playerFound = false;
+    for (var i = 0; i < map.length; i++)
+    {
+        for (var j = 0; j < map[i].length; j++)
+        {
+            if (map[i][j].contains(data.name))
+            {
+                for (var k = 0; k < map[i][j].length; k++)
+                {
+                    if (map[i][j][k] === data.name)
+                    {
+                        map[i][j].splice(k, 1);
+                    }
+                }
+            }
+        }
+    }
+
+    map[data.x][data.y].push(data.name);
+    clearMap();
+    drawGrid();
+    drawPlayers();
+});
+
+function drawPlayers()
+{
+    const canvas = document.getElementById('hostMap');
+
+    if (!canvas.getContext) {
+        return;
+    }
+    const ctx = canvas.getContext('2d');
+
+    // set line stroke and line width
+    ctx.strokeStyle = 'black';
+    ctx.font = "5px myFirstFont";
+
+    for (var x = 0; x < 7; x++)
+    {
+        for (var y = 0; y < 7; y++)
+        {
+            if (map[x][y].length > 0)
+            {
+                for (var i = 0; i < map[x][y].length; i++)
+                {
+                    ctx.fillText(map[x][y][i], x*(600/7), y*(600/7)+(i*5));
+                }
+            }
+        }
+    }
+}
+
+function clearMap()
+{
+    const canvas = document.getElementById('hostMap');
+
+    if (!canvas.getContext) {
+        return;
+    }
+    const ctx = canvas.getContext('2d');
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 }

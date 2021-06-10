@@ -117,7 +117,12 @@ io.on('connection', (socket) => {
                 rooms[i][2].push(player);
                 var xPos = randInt(0, 7);
                 var yPos = randInt(0, 7);
-                rooms[i][3][xPos][yPos].push(socket);
+                rooms[i][3][xPos][yPos].push(data.name);
+                rooms[i][0].emit('setPlayerPos', {
+                    name: data.name,
+                    x: xPos,
+                    y: yPos
+                });
                 console.log('player ' + data.name + ' has joined a room');
 
                 rooms[i][0].emit('playerJoined', {
