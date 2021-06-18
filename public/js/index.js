@@ -337,7 +337,6 @@ function loadGameScreen()
     enterButton.classList.add('enterButton');
     enterButton.setAttribute('type', 'submit');
 
-    draw("../src/PurplePlayer.png", graphicBoard, 100, 100);
     //meow
     document.body.appendChild(playerBoard);
     playerBoard.appendChild(displayName);
@@ -363,13 +362,6 @@ function loadHostGameScreen()
     clearMap();
     drawGrid();
     drawPlayers();
-}
-
-function draw(path, canvas, x, y){
-    var img = new Image();
-    img.src = path; 
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(img,50,50);
 }
 
 function requestQuestion()
