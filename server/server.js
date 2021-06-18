@@ -123,6 +123,10 @@ io.on('connection', (socket) => {
                     x: xPos,
                     y: yPos
                 });
+                socket.emit('localPosition', {
+                    x: xPos,
+                    y: yPos
+                });
                 console.log('player ' + data.name + ' has joined a room');
 
                 rooms[i][0].emit('playerJoined', {
@@ -188,6 +192,158 @@ io.on('connection', (socket) => {
             question: question,
             answer: answer
         });
+    });
+
+    socket.on('moveUp', () => {
+        for (var i = 0; i < rooms.length; i++)
+        {
+            for (var j = 0; j < rooms[i][2].length; j++)
+            {
+                if (rooms[i][2][j][3] === socket)
+                {
+                    for (var x = 0; x < rooms[i][3].length; x++)
+                    {
+                        for (var y = 0; y < rooms[i][3][x].length; y++)
+                        {
+                            if (rooms[i][3][x][y].includes(rooms[i][2][j][0]))
+                            {
+                                for (var k = 0; k < rooms[i][3][x][y].length; k++)
+                                {
+                                    if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
+                                    {
+                                        rooms[i][3][x][y].splice(k, 1);
+                                        rooms[i][3][x][y-1].push(rooms[i][2][j][0]);
+                                        rooms[i][0].emit('setPlayerPos', {
+                                            name: rooms[i][2][j][0],
+                                            x: x,
+                                            y: y-1
+                                        });
+                                        socket.emit('localPosition', {
+                                            x: x,
+                                            y: y-1
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    socket.on('moveDown', () => {
+        for (var i = 0; i < rooms.length; i++)
+        {
+            for (var j = 0; j < rooms[i][2].length; j++)
+            {
+                if (rooms[i][2][j][3] === socket)
+                {
+                    for (var x = 0; x < rooms[i][3].length; x++)
+                    {
+                        for (var y = 0; y < rooms[i][3][x].length; y++)
+                        {
+                            if (rooms[i][3][x][y].includes(rooms[i][2][j][0]))
+                            {
+                                for (var k = 0; k < rooms[i][3][x][y].length; k++)
+                                {
+                                    if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
+                                    {
+                                        rooms[i][3][x][y].splice(k, 1);
+                                        rooms[i][3][x][y+1].push(rooms[i][2][j][0]);
+                                        rooms[i][0].emit('setPlayerPos', {
+                                            name: rooms[i][2][j][0],
+                                            x: x,
+                                            y: y+1
+                                        });
+                                        socket.emit('localPosition', {
+                                            x: x,
+                                            y: y+1
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    socket.on('moveRight', () => {
+        for (var i = 0; i < rooms.length; i++)
+        {
+            for (var j = 0; j < rooms[i][2].length; j++)
+            {
+                if (rooms[i][2][j][3] === socket)
+                {
+                    for (var x = 0; x < rooms[i][3].length; x++)
+                    {
+                        for (var y = 0; y < rooms[i][3][x].length; y++)
+                        {
+                            if (rooms[i][3][x][y].includes(rooms[i][2][j][0]))
+                            {
+                                for (var k = 0; k < rooms[i][3][x][y].length; k++)
+                                {
+                                    if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
+                                    {
+                                        rooms[i][3][x][y].splice(k, 1);
+                                        rooms[i][3][x+1][y].push(rooms[i][2][j][0]);
+                                        rooms[i][0].emit('setPlayerPos', {
+                                            name: rooms[i][2][j][0],
+                                            x: x+1,
+                                            y: y
+                                        });
+                                        socket.emit('localPosition', {
+                                            x: x+1,
+                                            y: y
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    socket.on('moveLeft', () => {
+        for (var i = 0; i < rooms.length; i++)
+        {
+            for (var j = 0; j < rooms[i][2].length; j++)
+            {
+                if (rooms[i][2][j][3] === socket)
+                {
+                    for (var x = 0; x < rooms[i][3].length; x++)
+                    {
+                        for (var y = 0; y < rooms[i][3][x].length; y++)
+                        {
+                            if (rooms[i][3][x][y].includes(rooms[i][2][j][0]))
+                            {
+                                for (var k = 0; k < rooms[i][3][x][y].length; k++)
+                                {
+                                    if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
+                                    {
+                                        rooms[i][3][x][y].splice(k, 1);
+                                        rooms[i][3][x-1][y].push(rooms[i][2][j][0]);
+                                        rooms[i][0].emit('setPlayerPos', {
+                                            name: rooms[i][2][j][0],
+                                            x: x-1,
+                                            y: y
+                                        });
+                                        socket.emit('localPosition', {
+                                            x: x-1,
+                                            y: y
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     });
 
     //client disconnects

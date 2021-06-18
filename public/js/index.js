@@ -9,6 +9,9 @@ var answer = "";
 
 var hostMapData = [];
 
+var playerX = 0;
+var playerY = 0;
+
 //add options to join or host
 loadStartScreen();
 
@@ -305,6 +308,7 @@ function loadGameScreen()
     var displayName = document.createElement('h1');
     displayName.textContent = yourName;
     displayName.classList.add('yourNameAboveBoard');
+    displayName.setAttribute('id', 'displayName')
 
     var graphicBoard = document.createElement('canvas');
     graphicBoard.setAttribute('width', '200px');
@@ -429,33 +433,48 @@ function questionCorrect()
     answerBox.remove();
     enterButton.remove();
 
-    var moveUpButton = document.createElement('button');
-    moveUpButton.setAttribute('onclick', 'moveUp()');
-    moveUpButton.textContent = "Move Up";
-    moveUpButton.classList.add('actionButton');
-    var moveDownButton = document.createElement('button');
-    moveDownButton.setAttribute('onclick', 'moveDown()');
-    moveDownButton.textContent = "Move Down";
-    moveDownButton.classList.add('actionButton');
-    var moveLeftButton = document.createElement('button');
-    moveLeftButton.setAttribute('onclick', 'moveLeft()');
-    moveLeftButton.textContent = "Move Left";
-    moveLeftButton.classList.add('actionButton');
-    var moveRightButton = document.createElement('button');
-    moveRightButton.setAttribute('onclick', 'moveUp()');
-    moveRightButton.textContent = "Move Right";
-    moveRightButton.classList.add('actionButton');
+    if (playerY != 0)
+    {
+        var moveUpButton = document.createElement('button');
+        moveUpButton.setAttribute('onclick', 'moveUp()');
+        moveUpButton.textContent = "Move Up";
+        moveUpButton.classList.add('actionButton');
+        moveUpButton.setAttribute('id', 'upButton');
+        playerBoard.appendChild(moveUpButton);
+    }
+    if (playerY != 6)
+    {
+        var moveDownButton = document.createElement('button');
+        moveDownButton.setAttribute('onclick', 'moveDown()');
+        moveDownButton.textContent = "Move Down";
+        moveDownButton.classList.add('actionButton');
+        moveDownButton.setAttribute('id', 'downButton');
+        playerBoard.appendChild(moveDownButton);
+    }
+    if (playerX != 0)
+    {
+        var moveLeftButton = document.createElement('button');
+        moveLeftButton.setAttribute('onclick', 'moveLeft()');
+        moveLeftButton.textContent = "Move Left";
+        moveLeftButton.classList.add('actionButton');
+        moveLeftButton.setAttribute('id', 'leftButton');
+        playerBoard.appendChild(moveLeftButton);
+    }
+    if (playerX != 6)
+    {
+        var moveRightButton = document.createElement('button');
+        moveRightButton.setAttribute('onclick', 'moveUp()');
+        moveRightButton.textContent = "Move Right";
+        moveRightButton.classList.add('actionButton');
+        moveRightButton.setAttribute('id', 'rightButton');
+        playerBoard.appendChild(moveRightButton);
+    }
     var battleButton = document.createElement('button');
     battleButton.setAttribute('onclick', 'battle()');
     battleButton.textContent = "Battle";
     battleButton.classList.add('actionButton');
-
-    //append children
-    playerBoard.appendChild(moveUpButton);
-    playerBoard.appendChild(moveDownButton);
-    playerBoard.appendChild(moveRightButton);
-    playerBoard.appendChild(moveLeftButton);
-    playerBoard.appendChild(battleButton);
+    battleButton.setAttribute('id', 'battle');
+    playerBoard.appendChild(moveRightButton);    
 }
 
 function drawGrid()
@@ -497,7 +516,6 @@ function drawGrid()
 }
 
 socket.on('setPlayerPos', function (data) {
-    var playerFound = false;
     for (var i = 0; i < hostMapData.length; i++)
     {
         for (var j = 0; j < hostMapData[i].length; j++)
@@ -521,6 +539,11 @@ socket.on('setPlayerPos', function (data) {
     drawPlayers();
 });
 
+socket.on('localPosition', function (data) {
+    playerX = data.x;
+    playerY = data.y;
+});
+
 function drawPlayers()
 {
     const canvas = document.getElementById('hostMap');
@@ -532,7 +555,7 @@ function drawPlayers()
 
     // set line stroke and line width
     ctx.strokeStyle = 'black';
-    ctx.font = "5px myFirstFont";
+    ctx.font = "10px myFirstFont black";
 
     for (var x = 0; x < 7; x++)
     {
@@ -542,7 +565,7 @@ function drawPlayers()
             {
                 for (var i = 0; i < hostMapData[x][y].length; i++)
                 {
-                    ctx.fillText(hostMapData[x][y][i], x*(600/7), y*(600/7)+(i*5));
+                    ctx.fillText(hostMapData[x][y][i], (x*(600/7))+35, (y*(600/7))+12+(i*5));
                 }
             }
         }
@@ -559,4 +582,32 @@ function clearMap()
     const ctx = canvas.getContext('2d');
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function moveUp()
+{
+    socket.emit('moveUp');
+    clearScreen();
+    loadGameScreen();
+}
+
+function moveDown()
+{
+    socket.emit('moveDown');
+    clearScreen();
+    loadGameScreen();
+}
+
+function moveRight()
+{
+    socket.emit('moveRight');
+    clearScreen();
+    loadGameScreen();
+}
+
+function moveLeft()
+{
+    socket.emit('moveLeft');
+    clearScreen();
+    loadGameScreen();
 }
