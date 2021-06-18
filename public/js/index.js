@@ -463,7 +463,7 @@ function questionCorrect()
     if (playerX != 6)
     {
         var moveRightButton = document.createElement('button');
-        moveRightButton.setAttribute('onclick', 'moveUp()');
+        moveRightButton.setAttribute('onclick', 'moveRight()');
         moveRightButton.textContent = "Move Right";
         moveRightButton.classList.add('actionButton');
         moveRightButton.setAttribute('id', 'rightButton');
