@@ -218,10 +218,10 @@ io.on('connection', (socket) => {
                                             x: x,
                                             y: y-1
                                         });
-                                        socket.emit('localPosition', {
+                                        /*socket.emit('localPosition', {
                                             x: x,
                                             y: y-1
-                                        });
+                                        });*/
                                     }
                                 }
                             }
@@ -256,10 +256,10 @@ io.on('connection', (socket) => {
                                             x: x,
                                             y: y+1
                                         });
-                                        socket.emit('localPosition', {
+                                        /*socket.emit('localPosition', {
                                             x: x,
                                             y: y+1
-                                        });
+                                        });*/
                                     }
                                 }
                             }
@@ -294,10 +294,10 @@ io.on('connection', (socket) => {
                                             x: x+1,
                                             y: y
                                         });
-                                        socket.emit('localPosition', {
+                                        /*socket.emit('localPosition', {
                                             x: x+1,
                                             y: y
-                                        });
+                                        });*/
                                     }
                                 }
                             }
@@ -332,10 +332,10 @@ io.on('connection', (socket) => {
                                             x: x-1,
                                             y: y
                                         });
-                                        socket.emit('localPosition', {
+                                        /*socket.emit('localPosition', {
                                             x: x-1,
                                             y: y
-                                        });
+                                        });*/
                                     }
                                 }
                             }
