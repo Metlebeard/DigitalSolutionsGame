@@ -211,7 +211,7 @@ io.on('connection', (socket) => {
                                 {
                                     if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
                                     {
-                                        rooms[i][3][x][y].splice(k, 1);
+                                        //rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][3][x][y-1].push(rooms[i][2][j][0]);
                                         rooms[i][0].emit('setPlayerPos', {
                                             name: rooms[i][2][j][0],
@@ -249,7 +249,7 @@ io.on('connection', (socket) => {
                                 {
                                     if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
                                     {
-                                        rooms[i][3][x][y].splice(k, 1);
+                                        //rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][3][x][y+1].push(rooms[i][2][j][0]);
                                         rooms[i][0].emit('setPlayerPos', {
                                             name: rooms[i][2][j][0],
@@ -287,7 +287,7 @@ io.on('connection', (socket) => {
                                 {
                                     if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
                                     {
-                                        rooms[i][3][x][y].splice(k, 1);
+                                        //rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][3][x+1][y].push(rooms[i][2][j][0]);
                                         rooms[i][0].emit('setPlayerPos', {
                                             name: rooms[i][2][j][0],
@@ -325,7 +325,7 @@ io.on('connection', (socket) => {
                                 {
                                     if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
                                     {
-                                        rooms[i][3][x][y].splice(k, 1);
+                                        //rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][3][x-1][y].push(rooms[i][2][j][0]);
                                         rooms[i][0].emit('setPlayerPos', {
                                             name: rooms[i][2][j][0],
@@ -363,7 +363,7 @@ io.on('connection', (socket) => {
                 }
             }
             //if player leaving is a host, delete room
-            /*if (rooms[i][0] === socket)
+            if (rooms[i][0] === socket)
             {
                 //kick all players connected
                 for (var j = 0; j < rooms[i][2].length; j++)
@@ -372,7 +372,7 @@ io.on('connection', (socket) => {
                 }
                 console.log('deleted room');
                 rooms.splice(i, 1);
-            }*/
+            }
         }
     });
 });
