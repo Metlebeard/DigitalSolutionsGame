@@ -363,7 +363,7 @@ io.on('connection', (socket) => {
                 }
             }
             //if player leaving is a host, delete room
-            if (rooms[i][0] === socket)
+            /*if (rooms[i][0] === socket)
             {
                 //kick all players connected
                 for (var j = 0; j < rooms[i][2].length; j++)
@@ -372,7 +372,7 @@ io.on('connection', (socket) => {
                 }
                 console.log('deleted room');
                 rooms.splice(i, 1);
-            }
+            }*/
         }
     });
 });
