@@ -211,8 +211,8 @@ io.on('connection', (socket) => {
                                 {
                                     if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
                                     {
-                                        //rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][3][x][y-1].push(rooms[i][2][j][0]);
+                                        rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][0].emit('setPlayerPos', {
                                             name: rooms[i][2][j][0],
                                             x: x,
@@ -249,8 +249,8 @@ io.on('connection', (socket) => {
                                 {
                                     if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
                                     {
-                                        //rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][3][x][y+1].push(rooms[i][2][j][0]);
+                                        rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][0].emit('setPlayerPos', {
                                             name: rooms[i][2][j][0],
                                             x: x,
@@ -287,8 +287,8 @@ io.on('connection', (socket) => {
                                 {
                                     if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
                                     {
-                                        //rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][3][x+1][y].push(rooms[i][2][j][0]);
+                                        rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][0].emit('setPlayerPos', {
                                             name: rooms[i][2][j][0],
                                             x: x+1,
@@ -325,8 +325,8 @@ io.on('connection', (socket) => {
                                 {
                                     if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
                                     {
-                                        //rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][3][x-1][y].push(rooms[i][2][j][0]);
+                                        rooms[i][3][x][y].splice(k, 1);
                                         rooms[i][0].emit('setPlayerPos', {
                                             name: rooms[i][2][j][0],
                                             x: x-1,
