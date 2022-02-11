@@ -15,7 +15,7 @@ app.use(express.static(publicPath)); //redirect clients to index.html in public
 
 //ROOMS - - -
 //room reference: [0]Host Socket, [1]Room Code, [2]Player Arrays, [3]Map Array
-let rooms = []; //create 
+let rooms = []; //create rooms list
 
 //CLIENT CONNECTION - - -
 io.on('connection', (socket) => {
@@ -120,33 +120,40 @@ io.on('connection', (socket) => {
                 var xPos = randInt(0, 6); //choose random x position for starting position (1-7)
                 var yPos = randInt(0, 6); //choose random y position for starting position (1-7)
                 rooms[i][3][xPos][yPos].push(data.name); //add player to map using previous coordinates
+                //sent player pos on client device
                 rooms[i][0].emit('setPlayerPos', {
                     name: data.name,
                     x: xPos,
                     y: yPos
-                }); //sent player pos on client device
+                }); 
+                //send position to client
                 socket.emit('localPosition', {
                     x: xPos,
                     y: yPos
-                }); //send position to client
+                }); 
                 console.log('player ' + data.name + ' has joined a room'); //log clients connection to room
-
+                
+                //tell host that player has joined
                 rooms[i][0].emit('playerJoined', {
                     name: data.name
-                }); //tell host that player has joined
+                }); 
             }
         }
     });
 
+    //Kick player from room if host requests it
     socket.on('kickPlayer', (player) => {
         kickPlayer(player.name, player.code);
     });
 
+    //Host begins the game
     socket.on('beginGame', () => {
+        //Check which room this host owns
         for (var i = 0; i < rooms.length; i++)
         {
             if (rooms[i][0] === socket)
             {
+                //tell every player the game has begun
                 for (var j = 0; j < rooms[i][2].length; j++)
                 {
                     rooms[i][2][j][3].emit('gameStarted');
@@ -161,200 +168,111 @@ io.on('connection', (socket) => {
         }
     });
 
+    //activate when player needs a question
     socket.on('requestQuestion', () => {
-        var text = fs.readFileSync('public/src/questions.txt', 'utf-8');
-        var questions = text.split('\n');
+        var text = fs.readFileSync('public/src/questions.txt', 'utf-8'); //open the questions text file
+        var questions = text.split('\n'); //put questions into a list
 
-        var chosenQuestion = randInt(0, questions.length-1);
-        var question = "";
-        var answer = "";
-        var questionToAnswer = false;
-        console.log(chosenQuestion);
-        console.log(questions[chosenQuestion]);
+        var chosenQuestion = randInt(0, questions.length-1); //choose random question
+        var question = ""; //create question variable
+        var answer = ""; //create answer variable
+        var questionToAnswer = false; //fail safe
+        console.log(questions[chosenQuestion]); //log the chosen question
+        //separate question from answer
         for (var i = 0; i < questions[chosenQuestion].length; i++)
         {
+            //check if reading past the equals sign
             if (!questionToAnswer)
             {
                 if (questions[chosenQuestion][i] === "=")
                 {
-                    questionToAnswer = true;
+                    questionToAnswer = true; //finish writing question and begin writing answer
                 }
                 else
                 {
-                    question += questions[chosenQuestion][i];
+                    question += questions[chosenQuestion][i]; //write new character for question
                 }
             }
             else
             {
-                answer += questions[chosenQuestion][i];
+                answer += questions[chosenQuestion][i]; //write new character for answer
             }
         }
 
+        //send question and answer to client
         socket.emit('questionSent', {
             question: question,
             answer: answer
         });
     });
 
+    function movePlayer(xChange, yChange)
+    {
+         //search every room
+         for (var i = 0; i < rooms.length; i++)
+         {
+             //check every player in each room
+             for (var j = 0; j < rooms[i][2].length; j++)
+             {
+                 //check if the player who wants to move up is the player in this room
+                 if (rooms[i][2][j][3] === socket)
+                 {
+                     //check room's map for the player
+                     for (var x = 0; x < rooms[i][3].length; x++)
+                     {
+                         for (var y = 0; y < rooms[i][3][x].length; y++)
+                         {
+                             //check if player is at position on map
+                             if (rooms[i][3][x][y].includes(rooms[i][2][j][0]))
+                             {
+                                 //check every player at specified position on map
+                                 for (var k = 0; k < rooms[i][3][x][y].length; k++)
+                                 {
+                                     //check if exact player is found
+                                     if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
+                                     {
+                                         rooms[i][3][x+xChange][y+yChange].push(rooms[i][2][j][0]); //add player to the grid above
+                                         rooms[i][3][x][y].splice(k, 1); //remove player from original grid
+                                         //send new position to client
+                                         rooms[i][0].emit('setPlayerPos', {
+                                             name: rooms[i][2][j][0],
+                                             x: x+xChange,
+                                             y: y+yChange
+                                         });
+                                         if (yChange === -1) {console.log(rooms[i][2][j][0] + " moved up");} //log the movement of player
+                                         if (yChange === 1) {console.log(rooms[i][2][j][0] + " moved down");} //log the movement of player
+                                         if (xChange === -1) {console.log(rooms[i][2][j][0] + " moved left");} //log the movement of player
+                                         if (xChange === 1) {console.log(rooms[i][2][j][0] + " moved right");} //log the movement of player
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 }
+             }
+         }
+    }
+
+    //client requests to move upward
     socket.on('moveUp', () => {
-        for (var i = 0; i < rooms.length; i++)
-        {
-            for (var j = 0; j < rooms[i][2].length; j++)
-            {
-                if (rooms[i][2][j][3] === socket)
-                {
-                    for (var x = 0; x < rooms[i][3].length; x++)
-                    {
-                        for (var y = 0; y < rooms[i][3][x].length; y++)
-                        {
-                            if (rooms[i][3][x][y].includes(rooms[i][2][j][0]))
-                            {
-                                for (var k = 0; k < rooms[i][3][x][y].length; k++)
-                                {
-                                    if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
-                                    {
-                                        rooms[i][3][x][y-1].push(rooms[i][2][j][0]);
-                                        rooms[i][3][x][y].splice(k, 1);
-                                        rooms[i][0].emit('setPlayerPos', {
-                                            name: rooms[i][2][j][0],
-                                            x: x,
-                                            y: y-1
-                                        });
-                                        console.log(rooms[i][2][j][0] + " moved up");
-                                        /*socket.emit('localPosition', {
-                                            x: x,
-                                            y: y-1
-                                        });*/
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        movePlayer(0,-1); //move player up
     });
 
     socket.on('moveDown', () => {
-        for (var i = 0; i < rooms.length; i++)
-        {
-            for (var j = 0; j < rooms[i][2].length; j++)
-            {
-                if (rooms[i][2][j][3] === socket)
-                {
-                    for (var x = 0; x < rooms[i][3].length; x++)
-                    {
-                        for (var y = 0; y < rooms[i][3][x].length; y++)
-                        {
-                            if (rooms[i][3][x][y].includes(rooms[i][2][j][0]))
-                            {
-                                for (var k = 0; k < rooms[i][3][x][y].length; k++)
-                                {
-                                    if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
-                                    {
-                                        rooms[i][3][x][y+1].push(rooms[i][2][j][0]);
-                                        rooms[i][3][x][y].splice(k, 1);
-                                        rooms[i][0].emit('setPlayerPos', {
-                                            name: rooms[i][2][j][0],
-                                            x: x,
-                                            y: y+1
-                                        });
-                                        console.log(rooms[i][2][j][0] + " moved down");
-                                        /*socket.emit('localPosition', {
-                                            x: x,
-                                            y: y+1
-                                        });*/
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        movePlayer(0,1); //move player down
     });
 
     socket.on('moveRight', () => {
-        for (var i = 0; i < rooms.length; i++)
-        {
-            for (var j = 0; j < rooms[i][2].length; j++)
-            {
-                if (rooms[i][2][j][3] === socket)
-                {
-                    for (var x = 0; x < rooms[i][3].length; x++)
-                    {
-                        for (var y = 0; y < rooms[i][3][x].length; y++)
-                        {
-                            if (rooms[i][3][x][y].includes(rooms[i][2][j][0]))
-                            {
-                                for (var k = 0; k < rooms[i][3][x][y].length; k++)
-                                {
-                                    if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
-                                    {
-                                        rooms[i][3][x+1][y].push(rooms[i][2][j][0]);
-                                        rooms[i][3][x][y].splice(k, 1);
-                                        rooms[i][0].emit('setPlayerPos', {
-                                            name: rooms[i][2][j][0],
-                                            x: x+1,
-                                            y: y
-                                        });
-                                        console.log(rooms[i][2][j][0] + " moved right");
-                                        /*socket.emit('localPosition', {
-                                            x: x+1,
-                                            y: y
-                                        });*/
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        movePlayer(1,0); //move player right
     });
 
     socket.on('moveLeft', () => {
-        for (var i = 0; i < rooms.length; i++)
-        {
-            for (var j = 0; j < rooms[i][2].length; j++)
-            {
-                if (rooms[i][2][j][3] === socket)
-                {
-                    for (var x = 0; x < rooms[i][3].length; x++)
-                    {
-                        for (var y = 0; y < rooms[i][3][x].length; y++)
-                        {
-                            if (rooms[i][3][x][y].includes(rooms[i][2][j][0]))
-                            {
-                                for (var k = 0; k < rooms[i][3][x][y].length; k++)
-                                {
-                                    if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
-                                    {
-                                        rooms[i][3][x-1][y].push(rooms[i][2][j][0]);
-                                        rooms[i][3][x][y].splice(k, 1);
-                                        rooms[i][0].emit('setPlayerPos', {
-                                            name: rooms[i][2][j][0],
-                                            x: x-1,
-                                            y: y
-                                        });
-                                        console.log(rooms[i][2][j][0] + " moved left");
-                                        /*socket.emit('localPosition', {
-                                            x: x-1,
-                                            y: y
-                                        });*/
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        movePlayer(-1,0); //move player left
     });
 
     //client disconnects
     socket.on('disconnect', () => {
-        console.log('User was disconnected');
+        console.log('User was disconnected'); //log that client has left
         for (var i = 0; i < rooms.length; i++)
         {
             //if player is in a room leave it
@@ -362,10 +280,11 @@ io.on('connection', (socket) => {
             {
                 if (rooms[i][2][j][3] === socket)
                 {
+                    //tell host that a player left their game
                     rooms[i][0].emit('playerLeave', {
                         name: rooms[i][2][j][0]
                     });
-                    rooms[i][2].splice(j, 1);
+                    rooms[i][2].splice(j, 1); //remove player from room
                 }
             }
             //if player leaving is a host, delete room
@@ -376,8 +295,8 @@ io.on('connection', (socket) => {
                 {
                     kickPlayer(rooms[i][2][j][0], rooms[i][1]);
                 }
-                console.log('deleted room');
-                rooms.splice(i, 1);
+                console.log('deleted room'); //log room deletion
+                rooms.splice(i, 1); //remove room from room list
             }
         }
     });
