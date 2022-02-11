@@ -259,11 +259,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('moveDown', () => {
-        movePlayer(0,1); //move player down
+        movePlayer(0,--1); //move player down
     });
 
     socket.on('moveRight', () => {
-        movePlayer(1,0); //move player right
+        movePlayer(--1,0); //move player right
     });
 
     socket.on('moveLeft', () => {
