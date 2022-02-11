@@ -100,38 +100,40 @@ io.on('connection', (socket) => {
         //check for room and see if name is available
         for (var i = 0; i < rooms.length; i++)
         {
+            //check if code is valid for a room
             if (data.code === rooms[i][1])
             {
-
+                //check if name is already in selected room
                 for (var j = 0; j < rooms[i][2].length; j++)
                 {
+                    //if name is taken send error to the client
                     if (data.name === rooms[i][2][j][0])
                     {
-                        console.log('player tried to join with the same name');
-                        socket.emit('nameError');
+                        console.log('player tried to join with the same name'); //log name error to console
+                        socket.emit('nameError'); //send error to client
                         return;
                     }
                 }
-                socket.emit('nameSuccessful');
+                socket.emit('nameSuccessful'); //send success to client
                 
-                rooms[i][2].push(player);
-                var xPos = randInt(0, 7);
-                var yPos = randInt(0, 7);
-                rooms[i][3][xPos][yPos].push(data.name);
+                rooms[i][2].push(player); //add player to room
+                var xPos = randInt(0, 6); //choose random x position for starting position (1-7)
+                var yPos = randInt(0, 6); //choose random y position for starting position (1-7)
+                rooms[i][3][xPos][yPos].push(data.name); //add player to map using previous coordinates
                 rooms[i][0].emit('setPlayerPos', {
                     name: data.name,
                     x: xPos,
                     y: yPos
-                });
+                }); //sent player pos on client device
                 socket.emit('localPosition', {
                     x: xPos,
                     y: yPos
-                });
-                console.log('player ' + data.name + ' has joined a room');
+                }); //send position to client
+                console.log('player ' + data.name + ' has joined a room'); //log clients connection to room
 
                 rooms[i][0].emit('playerJoined', {
                     name: data.name
-                });
+                }); //tell host that player has joined
             }
         }
     });
