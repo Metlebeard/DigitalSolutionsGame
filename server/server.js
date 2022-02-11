@@ -231,7 +231,7 @@ io.on('connection', (socket) => {
                                      //check if exact player is found
                                      if (rooms[i][3][x][y][k] === rooms[i][2][j][0])
                                      {
-                                         rooms[i][3][x+xChange][y+yChange].push(rooms[i][2][j][0]); //add player to the grid above
+                                         rooms[i][3][x+xChange][y+yChange].push(rooms[i][2][j][0]); //add player to the new position
                                          rooms[i][3][x][y].splice(k, 1); //remove player from original grid
                                          //send new position to client
                                          rooms[i][0].emit('setPlayerPos', {
