@@ -218,6 +218,7 @@ io.on('connection', (socket) => {
                                             x: x,
                                             y: y-1
                                         });
+                                        console.log(rooms[i][2][j][0] + " moved up");
                                         /*socket.emit('localPosition', {
                                             x: x,
                                             y: y-1
@@ -256,6 +257,7 @@ io.on('connection', (socket) => {
                                             x: x,
                                             y: y+1
                                         });
+                                        console.log(rooms[i][2][j][0] + " moved down");
                                         /*socket.emit('localPosition', {
                                             x: x,
                                             y: y+1
@@ -294,6 +296,7 @@ io.on('connection', (socket) => {
                                             x: x+1,
                                             y: y
                                         });
+                                        console.log(rooms[i][2][j][0] + " moved right");
                                         /*socket.emit('localPosition', {
                                             x: x+1,
                                             y: y
@@ -332,6 +335,7 @@ io.on('connection', (socket) => {
                                             x: x-1,
                                             y: y
                                         });
+                                        console.log(rooms[i][2][j][0] + " moved left");
                                         /*socket.emit('localPosition', {
                                             x: x-1,
                                             y: y
