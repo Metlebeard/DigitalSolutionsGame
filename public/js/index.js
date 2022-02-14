@@ -547,7 +547,7 @@ function drawPlayers()
 
     // set line stroke and line width
     ctx.strokeStyle = 'black';
-    ctx.font = "10px myFirstFont black";
+    ctx.font = "15px myFirstFont black";
 
     for (var x = 0; x < 7; x++)
     {
@@ -557,7 +557,7 @@ function drawPlayers()
             {
                 for (var i = 0; i < hostMapData[x][y].length; i++)
                 {
-                    ctx.fillText(hostMapData[x][y][i], (x*(600/7))+35, (y*(600/7))+12+(i*5));
+                    ctx.fillText(hostMapData[x][y][i], (x*(600/7))+35, (y*(600/7))+12+(i*15));
                 }
             }
         }
