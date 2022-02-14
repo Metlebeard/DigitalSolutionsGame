@@ -466,7 +466,7 @@ function questionCorrect()
     battleButton.textContent = "Battle";
     battleButton.classList.add('actionButton');
     battleButton.setAttribute('id', 'battle');
-    playerBoard.appendChild(moveRightButton);    
+    playerBoard.appendChild(battleButton);    
 }
 
 function drawGrid()
